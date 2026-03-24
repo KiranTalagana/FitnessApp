@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kiran Talagana's Total Fitness Blueprint — Daily schedule, workout plans, macro tracking, and wellness protocols.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0a0e1a">
+    <title>Kiran's Fitness Blueprint</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <span class="logo-icon">🛡️</span>
+            <div>
+                <h1 class="header-title">Kiran's Blueprint</h1>
+                <p class="header-subtitle" id="header-date"></p>
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="streak-badge" id="streak-badge">
+                <span class="streak-fire">🔥</span>
+                <span class="streak-count" id="streak-count">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Weight Update Modal -->
+    <div class="modal-overlay" id="weight-modal">
+        <div class="modal-card">
+            <h3 class="modal-title">Update Profile</h3>
+            <p class="modal-subtitle">Macros will recalculate automatically</p>
+            <div class="modal-field">
+                <label for="weight-input">Weight (kg)</label>
+                <input type="number" id="weight-input" step="0.1" min="30" max="200" value="71.2">
+            </div>
+            <div class="modal-field">
+                <label for="age-input">Age (years)</label>
+                <input type="number" id="age-input" step="1" min="10" max="100" value="25">
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-cancel" id="weight-cancel">Cancel</button>
+                <button class="modal-btn modal-btn-save" id="weight-save">Save & Recalculate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+        <!-- ===== DASHBOARD VIEW ===== -->
+        <section class="view active" id="view-dashboard">
+            <div class="greeting-card">
+                <h2 class="greeting-text" id="greeting-text"></h2>
+                <p class="greeting-sub">Total Fitness Blueprint V5.0</p>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Today's Progress -->
+                <div class="glass-card card-progress">
+                    <div class="card-header">
+                        <span class="card-icon">📊</span>
+                        <span class="card-label">Today's Progress</span>
+                    </div>
+                    <div class="progress-ring-container">
+                        <svg class="progress-ring" viewBox="0 0 120 120">
+                            <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
+                            <circle class="progress-ring-fill" id="progress-ring-fill" cx="60" cy="60" r="52"/>
+                        </svg>
+                        <span class="progress-percent" id="progress-percent">0%</span>
+                    </div>
+                    <p class="progress-label" id="progress-label">0 of 8 tasks</p>
+                </div>
+
+                <!-- Weight & BMI Card -->
+                <div class="glass-card card-bmi">
+                    <div class="card-header">
+                        <span class="card-icon">⚖️</span>
+                        <span class="card-label">Body Stats</span>
+                        <button class="edit-btn" id="weight-edit-btn" title="Update weight">✏️</button>
+                    </div>
+                    <div class="bmi-display">
+                        <div class="bmi-weight">
+                            <span class="bmi-weight-value" id="weight-display">71.2 kg</span>
+                            <span class="bmi-weight-label">Current Weight</span>
+                        </div>
+                        <div class="bmi-divider"></div>
+                        <div class="bmi-score">
+                            <span class="bmi-score-value" id="bmi-value">--</span>
+                            <span class="bmi-score-category" id="bmi-category">--</span>
+                            <span class="bmi-score-label">BMI</span>
+                        </div>
+                    </div>
+                    <div class="energy-row">
+                        <div class="energy-item">
+                            <span class="energy-val" id="bmr-value">--</span>
+                            <span class="energy-label">BMR (cal)</span>
+                        </div>
+                        <div class="energy-item">
+                            <span class="energy-val" id="tdee-value">--</span>
+                            <span class="energy-label">TDEE (cal)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today's Workout -->
+                <div class="glass-card card-workout">
+                    <div class="card-header">
+                        <span class="card-icon">🏋️</span>
+                        <span class="card-label">Today's Workout</span>
+                    </div>
+                    <h3 class="workout-name" id="dash-workout-name">Rest Day</h3>
+                    <p class="workout-focus" id="dash-workout-focus"></p>
+                </div>
+
+                <!-- Macro Snapshot -->
+                <div class="glass-card card-macros">
+                    <div class="card-header">
+                        <span class="card-icon">🥩</span>
+                        <span class="card-label">Daily Macro Targets</span>
+                    </div>
+                    <div class="macro-mini-bars">
+                        <div class="macro-mini">
+                            <span class="macro-mini-label">Protein</span>
+                            <div class="macro-mini-bar"><div class="macro-mini-fill protein-fill" style="width:75%"></div></div>
+                            <span class="macro-mini-val" id="macro-protein-val">114–156g</span>
+                        </div>
+                        <div class="macro-mini">
+                            <span class="macro-mini-label">Carbs</span>
+                            <div class="macro-mini-bar"><div class="macro-mini-fill carb-fill" style="width:50%"></div></div>
+                            <span class="macro-mini-val" id="macro-carb-val">71–142g</span>
+                        </div>
+                        <div class="macro-mini">
+                            <span class="macro-mini-label">Fat</span>
+                            <div class="macro-mini-bar"><div class="macro-mini-fill fat-fill" style="width:45%"></div></div>
+                            <span class="macro-mini-val" id="macro-fat-val">35–71g</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Protocol Reminders -->
+                <div class="glass-card card-protocols">
+                    <div class="card-header">
+                        <span class="card-icon">⚡</span>
+                        <span class="card-label">Protocol Reminders</span>
+                    </div>
+                    <ul class="protocol-list">
+                        <li><span class="proto-icon">🥝</span> Kiwi or Bone Broth (Potassium Flush)</li>
+                        <li><span class="proto-icon">🌾</span> 2 tbsp Flax Seeds (Omega-3)</li>
+                        <li><span class="proto-icon">☕</span> No coffee after 1 PM</li>
+                        <li><span class="proto-icon">🥗</span> Night Salad for dinner</li>
+                    </ul>
+                </div>
+
+                <!-- Complete Guide Link -->
+                <div class="glass-card card-guide">
+                    <div class="card-header">
+                        <span class="card-icon">📖</span>
+                        <span class="card-label">Complete Guide</span>
+                    </div>
+                    <p class="guide-desc">Your full PDF training guide from alt_lifts</p>
+                    <a href="Complete%20GUIDE%20(1).pdf" target="_blank" class="guide-btn">
+                        <span>📄</span> Open Complete Guide PDF
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== DAILY SCHEDULE VIEW ===== -->
+        <section class="view" id="view-daily">
+            <h2 class="view-title">Daily Schedule</h2>
+            <p class="view-subtitle" id="daily-date-label"></p>
+            <div class="schedule-list" id="schedule-list">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== WEEKLY WORKOUT VIEW ===== -->
+        <section class="view" id="view-weekly">
+            <h2 class="view-title">6-Day Workout Split</h2>
+            <p class="view-subtitle">Beginner Reset · 15–20 Rep Range</p>
+            <div class="workout-grid" id="workout-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
+        <!-- ===== NUTRITION VIEW ===== -->
+        <section class="view" id="view-nutrition">
+            <h2 class="view-title">Nutrition & Protocols</h2>
+
+            <!-- Macro Architecture -->
+            <div class="glass-card nutrition-section">
+                <h3 class="section-heading"><span>🎯</span> Macro Architecture <small>(<span id="nut-weight-display">71.2 kg</span> / 5'4")</small></h3>
+                <p class="section-goal">Primary Goal: <strong>Lean Bulk</strong> — Build muscle while cutting visceral fat & reducing facial puffiness.</p>
+                <div class="macro-detail-grid">
+                    <div class="macro-detail protein-detail">
+                        <div class="macro-detail-header">
+                            <span class="macro-dot protein-dot"></span>
+                            <h4>Protein</h4>
+                        </div>
+                        <p class="macro-range" id="nut-protein-range">114g – 156g / day</p>
+                        <p class="macro-ratio" id="nut-protein-ratio">1.6–2.2 g/kg</p>
+                        <ul class="macro-sources">
+                            <li>Chicken Breast — 26g / 3 oz</li>
+                            <li>Goat — 23g / 4 oz</li>
+                            <li>Whey Protein — 24g / scoop</li>
+                        </ul>
+                    </div>
+                    <div class="macro-detail carb-detail">
+                        <div class="macro-detail-header">
+                            <span class="macro-dot carb-dot"></span>
+                            <h4>Carbs</h4>
+                        </div>
+                        <p class="macro-range" id="nut-carb-range">71g – 142g / day</p>
+                        <p class="macro-ratio" id="nut-carb-ratio">1–2 g/kg</p>
+                        <ul class="macro-sources">
+                            <li>Brown Rice — 45g / cup</li>
+                            <li>Sweet Potato — 35g / medium</li>
+                        </ul>
+                    </div>
+                    <div class="macro-detail fat-detail">
+                        <div class="macro-detail-header">
+                            <span class="macro-dot fat-dot"></span>
+                            <h4>Fat</h4>
+                        </div>
+                        <p class="macro-range" id="nut-fat-range">35g – 71g / day</p>
+                        <p class="macro-ratio" id="nut-fat-ratio">0.5–1 g/kg</p>
+                        <ul class="macro-sources">
+                            <li>Ghee — 14g / tbsp</li>
+                            <li>Nuts — 15-20g / oz</li>
+                            <li>Avocado / Guacamole</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Anti-Inflammatory Protocol -->
+            <div class="glass-card nutrition-section">
+                <h3 class="section-heading"><span>🧬</span> Anti-Inflammatory & Jawline Protocol</h3>
+                <div class="protocol-cards">
+                    <div class="proto-card">
+                        <h4>🥝 Potassium Flush</h4>
+                        <p>1–2 Kiwis or 1 cup Chicken Bone Broth daily to balance sodium and eliminate facial water retention.</p>
+                    </div>
+                    <div class="proto-card">
+                        <h4>🌾 Flax Filter</h4>
+                        <p>2 tbsp Whole Flax Seeds daily for Omega-3s to reduce systemic inflammation.</p>
+                    </div>
+                    <div class="proto-card">
+                        <h4>🧂 Sodium Ceiling</h4>
+                        <p>Limit Just Bare Chicken (780mg) & Alfredo Sauce (420mg) to <strong>2 total servings/week</strong>.</p>
+                    </div>
+                    <div class="proto-card">
+                        <h4>🥗 Night Salad Rule</h4>
+                        <p>Dinner = Spinach + Cucumber + Tomato + Mushrooms + lean protein + minimal carbs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9-to-5 Energy -->
+            <div class="glass-card nutrition-section">
+                <h3 class="section-heading"><span>⚡</span> 9-to-5 Focus & Energy Architecture</h3>
+                <div class="protocol-cards">
+                    <div class="proto-card">
+                        <h4>🍳 Eggs-First Rule</h4>
+                        <p>Breakfast = High-Protein/High-Fat (Eggs/Spinach/Flax) to prevent insulin-induced daytime sleepiness.</p>
+                    </div>
+                    <div class="proto-card">
+                        <h4>🍲 Liquid Gold Hack</h4>
+                        <p>Cook all grains in Chicken Bone Broth — adds 11g protein + minerals per cup.</p>
+                    </div>
+                    <div class="proto-card">
+                        <h4>☕ Caffeine Cutoff</h4>
+                        <p>No coffee after <strong>1:00 PM</strong> — protects deep sleep, lowers morning cortisol.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== MY PLAN VIEW ===== -->
+        <section class="view" id="view-plan">
+            <h2 class="view-title">My Plan</h2>
+            <p class="view-subtitle">Complete Protocol Reference for Kiran Talagana</p>
+
+            <!-- Supplement Timing -->
+            <div class="glass-card plan-section">
+                <h3 class="section-heading"><span>💊</span> Supplement Schedule</h3>
+                <div class="supplement-timeline">
+                    <div class="supp-item">
+                        <div class="supp-time">Morning</div>
+                        <div class="supp-detail">
+                            <strong>With Breakfast</strong>
+                            <p>Centrum Men Multivitamin + Vitamin D3 (1000 IU)</p>
+                        </div>
+                    </div>
+                    <div class="supp-item">
+                        <div class="supp-time">10:30 AM</div>
+                        <div class="supp-detail">
+                            <strong>With Protein Shake</strong>
+                            <p>6 Youtheory Collagen Tablets (skin elasticity / jawline)</p>
+                        </div>
+                    </div>
+                    <div class="supp-item">
+                        <div class="supp-time">Night</div>
+                        <div class="supp-detail">
+                            <strong>Before Bed</strong>
+                            <p>1 Magnesium Softgel (400mg) for muscle relaxation & recovery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Body Stats -->
+            <div class="glass-card plan-section">
+                <h3 class="section-heading"><span>📐</span> Body Stats & Goals</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-value">71.2 kg</span>
+                        <span class="stat-label">Current Weight</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">5'4"</span>
+                        <span class="stat-label">Height</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">Lean Bulk</span>
+                        <span class="stat-label">Primary Goal</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">15–20</span>
+                        <span class="stat-label">Rep Range</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly High-Sodium Tracker -->
+            <div class="glass-card plan-section">
+                <h3 class="section-heading"><span>🧂</span> Weekly Sodium Tracker</h3>
+                <p class="sodium-note">Max 2 high-sodium servings per week (Just Bare Chicken / Alfredo Sauce)</p>
+                <div class="sodium-tracker" id="sodium-tracker">
+                    <button class="sodium-btn" id="sodium-btn-1" data-index="0">
+                        <span class="sodium-check">✓</span>
+                        <span>Serving 1</span>
+                    </button>
+                    <button class="sodium-btn" id="sodium-btn-2" data-index="1">
+                        <span class="sodium-check">✓</span>
+                        <span>Serving 2</span>
+                    </button>
+                </div>
+                <p class="sodium-remaining" id="sodium-remaining">2 servings remaining this week</p>
+            </div>
+
+            <!-- Quick Reference -->
+            <div class="glass-card plan-section">
+                <h3 class="section-heading"><span>📋</span> Quick Reference</h3>
+                <table class="ref-table">
+                    <thead>
+                        <tr><th>Rule</th><th>Detail</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Hydration</td><td>500ml Water + Lemon at 7 AM</td></tr>
+                        <tr><td>Protein Target</td><td>114–156g daily</td></tr>
+                        <tr><td>Carb Target</td><td>71–142g daily</td></tr>
+                        <tr><td>Fat Target</td><td>35–71g daily</td></tr>
+                        <tr><td>Caffeine Cutoff</td><td>1:00 PM</td></tr>
+                        <tr><td>Sodium Limit</td><td>2 high-sodium servings / week</td></tr>
+                        <tr><td>Flax Seeds</td><td>2 tbsp daily</td></tr>
+                        <tr><td>Potassium Flush</td><td>1-2 Kiwis or Bone Broth daily</td></tr>
+                        <tr><td>Night Salad</td><td>High-volume, minimal carbs at dinner</td></tr>
+                        <tr><td>Magnesium</td><td>400mg before bed</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-btn active" data-view="dashboard" id="nav-dashboard">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-btn" data-view="daily" id="nav-daily">
+            <span class="nav-icon">📅</span>
+            <span class="nav-label">Daily</span>
+        </button>
+        <button class="nav-btn" data-view="weekly" id="nav-weekly">
+            <span class="nav-icon">🏋️</span>
+            <span class="nav-label">Workout</span>
+        </button>
+        <button class="nav-btn" data-view="nutrition" id="nav-nutrition">
+            <span class="nav-icon">🥗</span>
+            <span class="nav-label">Nutrition</span>
+        </button>
+        <button class="nav-btn" data-view="plan" id="nav-plan">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">My Plan</span>
+        </button>
+    </nav>
+
+    <script src="app.js"></script>
+</body>
+</html>
