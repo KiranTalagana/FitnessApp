@@ -908,7 +908,235 @@ body {
     white-space: nowrap;
 }
 
+/* =====================
+   DAILY CALORIE PLANNER
+   ===================== */
+.card-calories {
+    grid-column: 1 / -1;
+}
 
+.calorie-total {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.calorie-number {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.calorie-unit {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.calorie-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    margin: 10px 0 8px;
+    overflow: hidden;
+}
+
+.calorie-bar {
+    height: 100%;
+    background: var(--accent-gradient);
+    border-radius: 4px;
+    transition: width 0.6s ease;
+    width: 0;
+}
+
+.calorie-vs-tdee {
+    font-size: 0.72rem;
+    font-weight: 500;
+    margin-bottom: 14px;
+}
+
+.meal-selector-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.meal-selector-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-glass);
+    border-radius: var(--radius-sm);
+}
+
+.meal-selector-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 70px;
+}
+
+.meal-selector-time {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--accent-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.meal-selector-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.meal-selector-dropdown {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 10px;
+    font-family: var(--font);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2394a3b8'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 28px;
+}
+
+.meal-selector-dropdown:focus {
+    border-color: var(--accent-primary);
+}
+
+.meal-selector-dropdown option {
+    background: #1e293b;
+    color: #f1f5f9;
+}
+
+/* =====================
+   PANTRY VIEW
+   ===================== */
+#pantry-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.pantry-category {
+    padding: 16px;
+}
+
+.pantry-cat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.pantry-cat-icon {
+    font-size: 1.1rem;
+    margin-right: 8px;
+}
+
+.pantry-cat-label {
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.pantry-cat-count {
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.pantry-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pantry-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-family: var(--font);
+    font-size: 0.78rem;
+    font-weight: 500;
+    border: 1px solid var(--border-glass);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    color: var(--text-secondary);
+    position: relative;
+}
+
+.pantry-item.in-stock {
+    border-color: rgba(34, 197, 94, 0.25);
+    background: rgba(34, 197, 94, 0.06);
+}
+
+.pantry-item.in-stock .pantry-item-status {
+    color: var(--success);
+}
+
+.pantry-item.out-of-stock {
+    opacity: 0.5;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+.pantry-item.out-of-stock .pantry-item-status {
+    color: #ef4444;
+}
+
+.pantry-item-status {
+    font-weight: 700;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+.pantry-item-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.pantry-item-note {
+    display: none;
+}
+
+.pantry-item:hover .pantry-item-note,
+.pantry-item:focus .pantry-item-note {
+    display: block;
+    position: absolute;
+    bottom: calc(100% + 6px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    border: 1px solid var(--border-glass-hover);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    color: var(--text-primary);
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    pointer-events: none;
+}
 
 /* --- SVG Gradient Definition (injected in HTML) --- */
 /* We define this inline gradient via JS */

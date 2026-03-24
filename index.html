@@ -144,6 +144,25 @@
                     </div>
                 </div>
 
+                <!-- Daily Calorie Planner -->
+                <div class="glass-card card-calories">
+                    <div class="card-header">
+                        <span class="card-icon">🔥</span>
+                        <span class="card-label">Today's Meal Plan</span>
+                    </div>
+                    <div class="calorie-total">
+                        <span class="calorie-number" id="total-calories">0</span>
+                        <span class="calorie-unit">estimated cal</span>
+                    </div>
+                    <div class="calorie-bar-container">
+                        <div class="calorie-bar" id="calorie-bar"></div>
+                    </div>
+                    <p class="calorie-vs-tdee" id="calorie-vs-tdee"></p>
+                    <div class="meal-selector-list" id="meal-selector-list">
+                        <!-- Rendered by JS -->
+                    </div>
+                </div>
+
                 <!-- Quick Protocol Reminders -->
                 <div class="glass-card card-protocols">
                     <div class="card-header">
@@ -379,6 +398,15 @@
             </div>
         </section>
 
+        <!-- ===== PANTRY VIEW ===== -->
+        <section class="view" id="view-pantry">
+            <h2 class="view-title">My Pantry</h2>
+            <p class="view-subtitle">Tap items to toggle in/out of stock</p>
+            <div id="pantry-grid">
+                <!-- Rendered by JS -->
+            </div>
+        </section>
+
     </main>
 
     <!-- Bottom Navigation -->
@@ -401,10 +429,15 @@
         </button>
         <button class="nav-btn" data-view="plan" id="nav-plan">
             <span class="nav-icon">⚙️</span>
-            <span class="nav-label">My Plan</span>
+            <span class="nav-label">Plan</span>
+        </button>
+        <button class="nav-btn" data-view="pantry" id="nav-pantry">
+            <span class="nav-icon">🛒</span>
+            <span class="nav-label">Pantry</span>
         </button>
     </nav>
 
+    <script src="pantry.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

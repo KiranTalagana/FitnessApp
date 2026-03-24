@@ -790,6 +790,165 @@ function initNav() {
     });
 }
 
+// ===== MEAL PLANNER / CALORIE TRACKER =====
+function parseCal(str) {
+    // Extract number from strings like "~500", "~260", "~210"
+    const match = str.replace(/[^\d]/g, '');
+    return parseInt(match) || 0;
+}
+
+function loadMealSelections() {
+    const key = `kiran_meals_${todayKey()}`;
+    const saved = localStorage.getItem(key);
+    if (saved) return JSON.parse(saved);
+    // Default: first recipe for each slot that has recipes
+    const defaults = {};
+    SCHEDULE.forEach((item, i) => {
+        if (item.recipes && item.recipes.length > 0) {
+            defaults[i] = 0;
+        }
+    });
+    return defaults;
+}
+
+function saveMealSelections(selections) {
+    const key = `kiran_meals_${todayKey()}`;
+    localStorage.setItem(key, JSON.stringify(selections));
+}
+
+function renderMealPlanner() {
+    const selections = loadMealSelections();
+    const profile = loadProfile();
+    const bmr = calcBMR(profile.weight, profile.height, profile.age, profile.gender);
+    const tdee = calcTDEE(bmr, 'active');
+    const list = document.getElementById('meal-selector-list');
+
+    // Calculate total calories
+    let totalCal = 0;
+    let totalP = 0, totalC = 0, totalF = 0;
+
+    const slotsWithRecipes = SCHEDULE.map((item, i) => {
+        if (!item.recipes || item.recipes.length === 0) return null;
+        const sel = selections[i] !== undefined ? selections[i] : 0;
+        const recipe = item.recipes[sel];
+        const cal = parseCal(recipe.macros.calories);
+        totalCal += cal;
+        totalP += parseInt(recipe.macros.protein) || 0;
+        totalC += parseInt(recipe.macros.carbs) || 0;
+        totalF += parseInt(recipe.macros.fat) || 0;
+        return { schedIdx: i, item, sel, recipe, cal };
+    }).filter(Boolean);
+
+    // Update totals
+    document.getElementById('total-calories').textContent = totalCal;
+
+    const pct = Math.min((totalCal / tdee) * 100, 100);
+    document.getElementById('calorie-bar').style.width = `${pct}%`;
+
+    const diff = totalCal - Math.round(tdee);
+    const vsEl = document.getElementById('calorie-vs-tdee');
+    if (diff > 0) {
+        vsEl.textContent = `+${diff} cal above TDEE (${Math.round(tdee)}) — surplus for lean bulk`;
+        vsEl.style.color = '#fbbf24';
+    } else if (diff < -250) {
+        vsEl.textContent = `${diff} cal below TDEE (${Math.round(tdee)}) — deficit for cutting`;
+        vsEl.style.color = '#38bdf8';
+    } else {
+        vsEl.textContent = `${diff} cal vs TDEE (${Math.round(tdee)}) — near maintenance`;
+        vsEl.style.color = '#94a3b8';
+    }
+
+    // Render selectors
+    list.innerHTML = slotsWithRecipes.map(s => `
+        <div class="meal-selector-row">
+            <div class="meal-selector-info">
+                <span class="meal-selector-time">${s.item.time}</span>
+                <span class="meal-selector-label">${s.item.label}</span>
+            </div>
+            <select class="meal-selector-dropdown" data-sched="${s.schedIdx}">
+                ${s.item.recipes.map((r, ri) => `
+                    <option value="${ri}" ${ri === s.sel ? 'selected' : ''}>${r.name} (${r.macros.calories})</option>
+                `).join('')}
+            </select>
+        </div>
+    `).join('');
+
+    // Attach change handlers
+    list.querySelectorAll('.meal-selector-dropdown').forEach(sel => {
+        sel.addEventListener('change', () => {
+            const current = loadMealSelections();
+            current[sel.dataset.sched] = parseInt(sel.value);
+            saveMealSelections(current);
+            renderMealPlanner();
+        });
+    });
+}
+
+// ===== PANTRY RENDERER =====
+function loadPantryStock() {
+    const saved = localStorage.getItem('kiran_pantry_stock');
+    if (saved) return JSON.parse(saved);
+    // Initialize from PANTRY defaults
+    const stock = {};
+    PANTRY.forEach((item, i) => { stock[i] = item.inStock; });
+    return stock;
+}
+
+function savePantryStock(stock) {
+    localStorage.setItem('kiran_pantry_stock', JSON.stringify(stock));
+}
+
+function renderPantry() {
+    const grid = document.getElementById('pantry-grid');
+    const stock = loadPantryStock();
+
+    // Group by category
+    const groups = {};
+    PANTRY.forEach((item, i) => {
+        if (!groups[item.category]) groups[item.category] = [];
+        groups[item.category].push({ ...item, idx: i, inStock: stock[i] !== false });
+    });
+
+    const order = ['protein', 'carbs', 'fat', 'veggie', 'fruit', 'dairy', 'spice', 'supplement', 'other'];
+
+    grid.innerHTML = order.filter(cat => groups[cat]).map(cat => {
+        const cfg = PANTRY_CATEGORIES[cat];
+        const items = groups[cat];
+        const inStockCount = items.filter(i => i.inStock).length;
+        return `
+            <div class="pantry-category glass-card">
+                <div class="pantry-cat-header">
+                    <div>
+                        <span class="pantry-cat-icon">${cfg.icon}</span>
+                        <span class="pantry-cat-label">${cfg.label}</span>
+                    </div>
+                    <span class="pantry-cat-count" style="color:${cfg.color}">${inStockCount}/${items.length}</span>
+                </div>
+                <div class="pantry-items">
+                    ${items.map(item => `
+                        <button class="pantry-item ${item.inStock ? 'in-stock' : 'out-of-stock'}" data-idx="${item.idx}">
+                            <span class="pantry-item-status">${item.inStock ? '✓' : '✕'}</span>
+                            <span class="pantry-item-name">${item.name}</span>
+                            ${item.notes ? `<span class="pantry-item-note">${item.notes}</span>` : ''}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    // Click handlers
+    grid.querySelectorAll('.pantry-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const idx = parseInt(btn.dataset.idx);
+            const current = loadPantryStock();
+            current[idx] = !current[idx];
+            savePantryStock(current);
+            renderPantry();
+        });
+    });
+}
+
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded', () => {
     if (!localStorage.getItem('kiran_profile')) saveProfile(DEFAULT_PROFILE);
@@ -798,8 +957,11 @@ document.addEventListener('DOMContentLoaded', () => {
     initWeightEditor();
     renderHeader();
     renderDashboard();
+    renderMealPlanner();
     renderSchedule();
     renderWorkouts();
     renderSodium();
     renderNutritionMacros();
+    renderPantry();
 });
+
