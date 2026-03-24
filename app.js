@@ -823,6 +823,27 @@ function renderMealPlanner() {
     const tdee = calcTDEE(bmr, 'active');
     const list = document.getElementById('meal-selector-list');
 
+    // Pre-compute availability for every recipe
+    const availMap = {};
+    SCHEDULE.forEach((item, i) => {
+        if (!item.recipes || item.recipes.length === 0) return;
+        availMap[i] = item.recipes.map(r => getRecipeAvailability(r));
+    });
+
+    // Auto-select best available recipe if current selection is unavailable
+    SCHEDULE.forEach((item, i) => {
+        if (!availMap[i]) return;
+        const currentSel = selections[i] !== undefined ? selections[i] : 0;
+        if (!availMap[i][currentSel].canMake) {
+            // Try to find one that can be made
+            const betterIdx = availMap[i].findIndex(a => a.canMake);
+            if (betterIdx !== -1) {
+                selections[i] = betterIdx;
+            }
+        }
+    });
+    saveMealSelections(selections);
+
     // Calculate total calories
     let totalCal = 0;
     let totalP = 0, totalC = 0, totalF = 0;
@@ -831,12 +852,13 @@ function renderMealPlanner() {
         if (!item.recipes || item.recipes.length === 0) return null;
         const sel = selections[i] !== undefined ? selections[i] : 0;
         const recipe = item.recipes[sel];
+        const avail = availMap[i][sel];
         const cal = parseCal(recipe.macros.calories);
         totalCal += cal;
         totalP += parseInt(recipe.macros.protein) || 0;
         totalC += parseInt(recipe.macros.carbs) || 0;
         totalF += parseInt(recipe.macros.fat) || 0;
-        return { schedIdx: i, item, sel, recipe, cal };
+        return { schedIdx: i, item, sel, recipe, cal, avail, allAvail: availMap[i] };
     }).filter(Boolean);
 
     // Update totals
@@ -858,20 +880,27 @@ function renderMealPlanner() {
         vsEl.style.color = '#94a3b8';
     }
 
-    // Render selectors
-    list.innerHTML = slotsWithRecipes.map(s => `
-        <div class="meal-selector-row">
+    // Render selectors with availability
+    list.innerHTML = slotsWithRecipes.map(s => {
+        const statusIcon = s.avail.canMake ? '✓' : '⚠️';
+        const statusClass = s.avail.canMake ? 'meal-available' : 'meal-missing';
+        return `
+        <div class="meal-selector-row ${statusClass}">
             <div class="meal-selector-info">
                 <span class="meal-selector-time">${s.item.time}</span>
                 <span class="meal-selector-label">${s.item.label}</span>
             </div>
             <select class="meal-selector-dropdown" data-sched="${s.schedIdx}">
-                ${s.item.recipes.map((r, ri) => `
-                    <option value="${ri}" ${ri === s.sel ? 'selected' : ''}>${r.name} (${r.macros.calories})</option>
-                `).join('')}
+                ${s.item.recipes.map((r, ri) => {
+                    const a = s.allAvail[ri];
+                    const prefix = a.canMake ? '✓' : `⚠ ${a.missingCount} missing`;
+                    return `<option value="${ri}" ${ri === s.sel ? 'selected' : ''}>${prefix} · ${r.name} (${r.macros.calories})</option>`;
+                }).join('')}
             </select>
+            ${!s.avail.canMake ? `<div class="meal-missing-items">Missing: ${s.avail.missing.join(', ')}</div>` : ''}
         </div>
-    `).join('');
+        `;
+    }).join('');
 
     // Attach change handlers
     list.querySelectorAll('.meal-selector-dropdown').forEach(sel => {
@@ -937,7 +966,7 @@ function renderPantry() {
         `;
     }).join('');
 
-    // Click handlers
+    // Click handlers — toggle stock and re-render meal planner
     grid.querySelectorAll('.pantry-item').forEach(btn => {
         btn.addEventListener('click', () => {
             const idx = parseInt(btn.dataset.idx);
@@ -945,6 +974,7 @@ function renderPantry() {
             current[idx] = !current[idx];
             savePantryStock(current);
             renderPantry();
+            renderMealPlanner(); // Re-check recipe availability
         });
     });
 }
