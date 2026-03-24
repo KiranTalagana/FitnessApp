@@ -960,6 +960,32 @@ body {
     margin-bottom: 14px;
 }
 
+.btn-auto-plan {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass-hover);
+    color: var(--text-primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-auto-plan:hover {
+    background: rgba(129, 140, 248, 0.15);
+    border-color: var(--accent-primary);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-auto-plan:active {
+    transform: scale(0.95);
+}
+
 .meal-selector-list {
     display: flex;
     flex-direction: column;

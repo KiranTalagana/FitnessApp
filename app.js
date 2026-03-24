@@ -12,55 +12,41 @@ const SCHEDULE = [
     },
     {
         time: '8:00 AM', label: 'Breakfast',
-        instruction: 'High-Protein/High-Fat breakfast to prevent daytime sleepiness. Take Multivitamin + D3.',
+        instruction: 'High-Protein/High-Fat to prevent sleepiness. Take Multivitamin + D3.',
         recipes: [
             {
-                name: 'Spinach Egg Scramble',
-                ingredients: ['3 whole eggs', '1 cup fresh spinach', '1 tbsp ghee', '¼ tsp turmeric', 'Salt & pepper to taste'],
+                name: 'Cheat Code Breakfast Toast',
+                ingredients: ['2 slices Inked Bread (High Fiber)', '2 whole eggs', '½ avocado (sliced)', 'Pinch of red chili powder', 'Salt'],
                 steps: [
-                    'Heat ghee in a non-stick pan over medium heat.',
-                    'Add spinach and sauté for 1–2 minutes until wilted.',
-                    'Crack eggs directly into the pan, add turmeric.',
-                    'Scramble until eggs are fully cooked (2–3 min).',
-                    'Take Centrum Multivitamin + Vitamin D3 with the meal.'
+                    'Toast Inked Bread (10g fiber per slice).',
+                    'Fry or poach eggs in a non-stick pan.',
+                    'Mash avocado on toast, top with eggs.',
+                    'Sprinkle chili powder and salt. **Total Fiber: 22g+**',
+                    'Take Multivitamin + Vitamin D3 with the meal.'
+                ],
+                macros: { protein: '22g', carbs: '2g net', fat: '24g', calories: '~380' },
+                isFiber: true
+            },
+            {
+                name: 'Spinach Egg Scramble',
+                ingredients: ['3 whole eggs', '1 cup fresh spinach', '1 tbsp ghee', '¼ tsp turmeric', 'Salt & pepper'],
+                steps: [
+                    'Heat ghee, wilt spinach (1–2 min).',
+                    'Scramble with eggs and turmeric.',
+                    'Take Multivitamin + Vitamin D3 with the meal.'
                 ],
                 macros: { protein: '21g', carbs: '2g', fat: '18g', calories: '~260' }
             },
             {
-                name: 'Masala Omelette',
-                ingredients: ['3 whole eggs', '¼ onion (diced)', '1 small tomato (diced)', '1 green chili (minced)', '2 tbsp cilantro', '1 tbsp ghee', '¼ tsp cumin', '¼ tsp red chili powder', 'Salt to taste'],
-                steps: [
-                    'Beat eggs with cumin, chili powder, and salt.',
-                    'Heat ghee in a pan over medium heat.',
-                    'Sauté onion for 1 min, add tomato and green chili, cook 1 min.',
-                    'Pour egg mixture over the veggies, cover and cook 2–3 min.',
-                    'Flip, cook 1 more minute. Top with cilantro.'
-                ],
-                macros: { protein: '20g', carbs: '6g', fat: '18g', calories: '~275' }
-            },
-            {
                 name: 'Egg & Avocado Plate',
-                ingredients: ['3 eggs (2 whole + 1 white)', '½ avocado (sliced)', '1 cup spinach', '1 tbsp flax seeds', 'Pinch of everything bagel seasoning', 'Salt & pepper'],
+                ingredients: ['3 eggs (2 whole + 1 white)', '½ avocado (sliced)', '1 cup spinach', '1 tbsp flax seeds', 'Bagel seasoning'],
                 steps: [
-                    'Fry or poach eggs to your preference in a non-stick pan.',
-                    'Arrange spinach on a plate, top with avocado slices.',
-                    'Place eggs on top, sprinkle flax seeds and seasoning.',
-                    'Season with salt and pepper.'
+                    'Fry eggs, serve over fresh spinach and avocado.',
+                    'Sprinkle flax seeds for Omega-3 and Fiber.',
+                    'Take Multivitamin + Vitamin D3 with the meal.'
                 ],
-                macros: { protein: '22g', carbs: '8g', fat: '22g', calories: '~320' }
-            },
-            {
-                name: 'Veggie Egg Muffins (Meal Prep)',
-                ingredients: ['6 eggs', '1 cup spinach (chopped)', '¼ cup mushrooms (diced)', '¼ cup bell pepper (diced)', '¼ cup onion (diced)', '½ tsp garlic powder', 'Salt & pepper', 'Cooking spray'],
-                steps: [
-                    'Preheat oven to 375°F. Spray a muffin tin with cooking spray.',
-                    'Whisk eggs with garlic powder, salt, and pepper.',
-                    'Divide veggies evenly into 6 muffin cups.',
-                    'Pour egg mixture over veggies, fill ¾ full.',
-                    'Bake 20–22 min until set. Makes 6 muffins (eat 3 per serving).',
-                    'Store remaining 3 in fridge for next day.'
-                ],
-                macros: { protein: '18g', carbs: '4g', fat: '14g', calories: '~215 (3 muffins)' }
+                macros: { protein: '22g', carbs: '8g', fat: '22g', calories: '~320' },
+                isFiber: true
             }
         ]
     },
@@ -69,239 +55,131 @@ const SCHEDULE = [
         instruction: 'Protein shake + 6 Collagen tablets + fruit. Potassium flush (Kiwi).',
         recipes: [
             {
-                name: 'Classic Whey + Kiwi',
-                ingredients: ['1 scoop whey protein', '200ml cold water or almond milk', '1 kiwi (peeled)', '6 Youtheory Collagen tablets'],
+                name: 'Antioxidant Power Smoothie',
+                ingredients: ['1 scoop whey protein', '½ cup frozen blueberries', '1 tbsp chia seeds', '1 tbsp flax seeds', '150ml almond milk', 'Ice', '6 Collagen tablets'],
                 steps: [
-                    'Add whey protein and liquid to a shaker bottle.',
-                    'Shake vigorously for 30 seconds.',
-                    'Take 6 collagen tablets with the shake.',
-                    'Eat the kiwi on the side (Potassium Flush).'
+                    'Blend whey, blueberries, seeds, and almond milk.',
+                    'Take 6 collagen tablets with the smoothie.',
+                    'Eat 1 kiwi on the side (Potassium Flush).'
+                ],
+                macros: { protein: '28g', carbs: '18g', fat: '12g', calories: '~310' },
+                isAntioxidant: true, isFiber: true
+            },
+            {
+                name: 'Classic Whey + Kiwi',
+                ingredients: ['1 scoop whey protein', '200ml water', '1 kiwi (peeled)', '6 Collagen tablets'],
+                steps: [
+                    'Shake whey with water. Take collagen tablets.',
+                    'Eat the kiwi on the side.'
                 ],
                 macros: { protein: '24g', carbs: '12g', fat: '2g', calories: '~170' }
-            },
-            {
-                name: 'Banana Peanut Butter Shake',
-                ingredients: ['1 scoop whey protein (chocolate or vanilla)', '1 small banana', '1 tbsp natural peanut butter', '200ml almond milk', 'Ice cubes', '6 Youtheory Collagen tablets'],
-                steps: [
-                    'Blend whey, banana, peanut butter, almond milk, and ice until smooth.',
-                    'Take 6 collagen tablets alongside the shake.',
-                    'Eat 1 kiwi on the side for Potassium Flush.'
-                ],
-                macros: { protein: '30g', carbs: '28g', fat: '10g', calories: '~320' }
-            },
-            {
-                name: 'Mango Protein Smoothie',
-                ingredients: ['1 scoop whey protein (vanilla)', '½ cup frozen mango chunks', '½ cup Greek yogurt', '150ml water', 'Ice cubes', '6 Youtheory Collagen tablets'],
-                steps: [
-                    'Blend whey, mango, yogurt, water, and ice until creamy.',
-                    'Pour into a glass. Take 6 collagen tablets with it.',
-                    'Eat 1 kiwi separately for Potassium Flush.'
-                ],
-                macros: { protein: '32g', carbs: '22g', fat: '3g', calories: '~250' }
             }
         ]
     },
     {
         time: '1:00 PM', label: 'Lunch',
-        instruction: 'Main meal — protein + Daawat Basmati Rice (cooked in Bone Broth) + veggies.',
+        instruction: 'Main meal — Protein + 1 cup COOKED Basmati Rice + veggies.',
         recipes: [
             {
                 name: 'Bone Broth Basmati Bowl',
-                ingredients: ['5-6 oz chicken thighs (boneless)', '1 cup Daawat Basmati rice', '1 cup chicken bone broth', '2 cups frozen mixed veggies', '2 tbsp salsa', '1 tsp cumin', '½ tsp garlic powder', 'Salt to taste'],
+                ingredients: ['5-6 oz chicken thighs', '1 cup COOKED Basmati rice (cooked in bone broth)', '2 cups frozen mixed veggies', '2 tbsp salsa', 'Salt & Garlic'],
                 steps: [
-                    'Rinse Basmati rice. Cook in bone broth instead of water (Liquid Gold Hack — adds 11g protein).',
-                    'Season chicken with cumin, garlic powder, and salt.',
-                    'Cook chicken in a pan until 165°F internal (8–10 min). Slice.',
-                    'Steam or microwave frozen veggies for 3–4 min.',
-                    'Bowl: rice → veggies → sliced chicken → salsa on top.'
+                    'Use 1 cup cooked rice (approx 50g raw).',
+                    'Sauté chicken and steam mixed veggies.',
+                    'Combine all in a bowl with salsa.'
                 ],
-                macros: { protein: '45g', carbs: '52g', fat: '12g', calories: '~500' }
+                macros: { protein: '45g', carbs: '45g', fat: '12g', calories: '~480' }
+            },
+            {
+                name: 'Mediterranean Chickpea Salad',
+                ingredients: ['1 cup canned chickpeas (drained)', '4 oz grilled chicken', '½ cucumber', '1 tomato', '2 tbsp feta cheese', '5 olives', '1 tbsp olive oil', 'Lemon juice'],
+                steps: [
+                    'Toss chickpeas, veggies, and olives.',
+                    'Top with grilled chicken and feta.',
+                    'Drizzle with olive oil and lemon.'
+                ],
+                macros: { protein: '38g', carbs: '35g', fat: '22g', calories: '~490' },
+                isFiber: true
             },
             {
                 name: 'Goat Curry with Basmati',
-                ingredients: ['5 oz goat meat (bone-in or boneless)', '1 cup Daawat Basmati rice', '1 cup bone broth', '1 small onion (sliced)', '2 tomatoes (puréed)', '1 tbsp ginger-garlic paste', '1 tsp garam masala', '½ tsp turmeric', '½ tsp red chili powder', '1 tbsp oil', 'Fresh cilantro', 'Salt to taste'],
+                ingredients: ['5 oz goat meat', '1 cup COOKED Basmati rice', '1 cup bone broth', 'Onion/Tomato curry base'],
                 steps: [
-                    'Heat oil, sauté onion until golden (5 min).',
-                    'Add ginger-garlic paste, cook 1 min.',
-                    'Add tomato purée, turmeric, chili powder, salt. Cook 5 min.',
-                    'Add goat meat, stir to coat. Add ½ cup water, cover and simmer 40–50 min until tender.',
-                    'Add garam masala, garnish with cilantro.',
-                    'Cook Basmati rice in bone broth. Serve curry over rice.'
+                    'Prepare curry as usual. Serve over 1 cup cooked rice.'
                 ],
-                macros: { protein: '42g', carbs: '50g', fat: '15g', calories: '~510' }
-            },
-            {
-                name: 'Chicken Tikka Rice Bowl',
-                ingredients: ['6 oz chicken breast (cubed)', '2 tbsp plain yogurt', '1 tsp tikka masala powder', '½ tsp turmeric', '½ tsp paprika', '1 cup Daawat Basmati rice', '1 cup bone broth', '½ cucumber (diced)', '1 tomato (diced)', '2 tbsp mint chutney or raita', 'Lemon wedge'],
-                steps: [
-                    'Marinate chicken in yogurt, tikka masala, turmeric, and paprika for 15+ min.',
-                    'Cook chicken on a hot pan or grill until charred and cooked through (6–8 min).',
-                    'Cook Basmati rice in bone broth.',
-                    'Bowl: rice → chicken tikka → cucumber → tomato.',
-                    'Top with mint chutney/raita. Squeeze lemon.'
-                ],
-                macros: { protein: '48g', carbs: '50g', fat: '8g', calories: '~470' }
-            },
-            {
-                name: 'Lemon Herb Salmon with Basmati',
-                ingredients: ['5 oz salmon fillet', '1 cup Daawat Basmati rice', '1 cup bone broth', '1 cup broccoli florets', '1 tbsp olive oil', '2 cloves garlic (minced)', 'Juice of ½ lemon', '1 tsp dried oregano', 'Salt & pepper'],
-                steps: [
-                    'Season salmon with olive oil, garlic, lemon juice, oregano, salt, and pepper.',
-                    'Bake at 400°F for 12–15 min or pan-sear 4 min per side.',
-                    'Steam broccoli for 3–4 min.',
-                    'Cook Basmati rice in bone broth.',
-                    'Plate: rice, broccoli, and salmon. Drizzle any remaining lemon juice.'
-                ],
-                macros: { protein: '38g', carbs: '48g', fat: '16g', calories: '~490' }
-            },
-            {
-                name: 'Chickpea & Chicken Stir-Fry',
-                ingredients: ['4 oz chicken breast (sliced)', '½ cup canned chickpeas (drained)', '1 cup Daawat Basmati rice', '1 cup bone broth', '1 cup bell pepper (sliced)', '½ cup zucchini (sliced)', '1 tbsp soy sauce (low sodium)', '1 tsp ginger (grated)', '1 tbsp oil', 'Sesame seeds'],
-                steps: [
-                    'Cook Basmati rice in bone broth.',
-                    'Heat oil in a wok. Stir-fry chicken 4–5 min until cooked.',
-                    'Add bell pepper, zucchini, ginger. Stir-fry 3 min.',
-                    'Add chickpeas and soy sauce. Toss for 2 min.',
-                    'Serve over rice. Sprinkle sesame seeds.'
-                ],
-                macros: { protein: '40g', carbs: '55g', fat: '12g', calories: '~490' }
-            },
-            {
-                name: 'Lamb Keema with Basmati',
-                ingredients: ['5 oz ground lamb', '1 cup Daawat Basmati rice', '1 cup bone broth', '1 small onion (diced)', '1 tomato (diced)', '½ cup peas (frozen)', '1 tbsp ginger-garlic paste', '1 tsp cumin', '½ tsp garam masala', '½ tsp turmeric', '1 tbsp oil', 'Cilantro'],
-                steps: [
-                    'Heat oil, sauté onion until soft (3 min).',
-                    'Add ginger-garlic paste, cumin, turmeric. Cook 1 min.',
-                    'Add ground lamb, break apart and cook 5–6 min until browned.',
-                    'Add tomato and peas. Simmer 8–10 min.',
-                    'Finish with garam masala and cilantro. Serve over bone broth rice.'
-                ],
-                macros: { protein: '38g', carbs: '50g', fat: '18g', calories: '~520' }
+                macros: { protein: '42g', carbs: '45g', fat: '15g', calories: '~500' }
             }
         ]
     },
     {
         time: '4:00 PM', label: 'Snack',
-        instruction: 'Light energy snack — no heavy carbs before gym.',
+        instruction: 'Light energy — no heavy carbs before gym.',
         recipes: [
             {
-                name: 'Mixed Nuts + Mandarin',
-                ingredients: ['¼ cup mixed nuts (almonds, cashews, walnuts)', '1 mandarin orange'],
+                name: 'Pumpkin Seed & Date Duo',
+                ingredients: ['1 oz pumpkin seeds', '2 organic dates'],
                 steps: [
-                    'Portion ¼ cup of mixed nuts into a small container.',
-                    'Peel the mandarin.',
-                    'Eat slowly — last energy boost before gym.'
+                    'Eat pumpkin seeds for Magnesium/Zinc.',
+                    'Eat 2 dates for quick natural energy before gym.'
                 ],
-                macros: { protein: '5g', carbs: '14g', fat: '16g', calories: '~210' }
+                macros: { protein: '8g', carbs: '28g', fat: '14g', calories: '~260' },
+                isAntioxidant: true
             },
             {
                 name: 'Greek Yogurt & Almonds',
-                ingredients: ['¾ cup plain Greek yogurt', '10 almonds', '½ tsp honey (optional)', 'Pinch of cinnamon'],
+                ingredients: ['¾ cup plain Greek yogurt', '10 almonds', 'Cinnamon'],
                 steps: [
-                    'Scoop yogurt into a bowl.',
-                    'Top with almonds, drizzle honey, and sprinkle cinnamon.',
-                    'Eat 1.5–2 hours before gym for sustained energy.'
+                    'Combine in a bowl. Dust with cinnamon.'
                 ],
                 macros: { protein: '15g', carbs: '10g', fat: '10g', calories: '~190' }
-            },
-            {
-                name: 'Hummus & Cucumber Sticks',
-                ingredients: ['3 tbsp hummus', '1 medium cucumber (cut into sticks)', '5 baby carrots', 'Sprinkle of paprika'],
-                steps: [
-                    'Slice cucumber into sticks.',
-                    'Arrange with baby carrots on a plate.',
-                    'Scoop hummus into a small bowl, dust with paprika.',
-                    'Dip and eat.'
-                ],
-                macros: { protein: '5g', carbs: '14g', fat: '6g', calories: '~130' }
-            },
-            {
-                name: 'Apple Slices with Peanut Butter',
-                ingredients: ['1 medium apple (sliced)', '1 tbsp natural peanut butter'],
-                steps: [
-                    'Wash and slice the apple.',
-                    'Spread or dip slices into peanut butter.',
-                    'Great for slow-releasing energy before the gym.'
-                ],
-                macros: { protein: '4g', carbs: '28g', fat: '8g', calories: '~200' }
             }
         ]
     },
     {
         time: '6:00 PM', label: 'GYM',
-        instruction: 'Execute today\'s workout split — Focus on 15-20 rep range.',
+        instruction: 'Execute workout split — Reps: 15-20 for lean cutting.',
         recipes: []
     },
     {
         time: '8:30 PM', label: 'Night Salad',
-        instruction: 'High-volume salad with lean protein. Minimal carbs — keeps stomach flat by morning.',
+        instruction: 'High fiber + lean protein. Minimal carbs for gut health.',
         recipes: [
             {
                 name: 'Anti-Inflammatory Power Salad',
-                ingredients: ['2 cups fresh spinach', '½ cucumber (sliced)', '1 medium tomato (diced)', '½ cup mushrooms (sliced)', '4 oz grilled chicken breast', '2 tbsp guacamole', '2 tbsp whole flax seeds', '1 tbsp lemon juice', 'Black pepper'],
+                ingredients: ['2 cups spinach', '½ cucumber', '1 tomato', '½ cup mushrooms', '4 oz chicken', '2 tbsp guacamole', '2 tbsp flax seeds'],
                 steps: [
-                    'Arrange spinach as the base in a large bowl.',
-                    'Top with cucumber, tomato, and mushrooms.',
-                    'Slice grilled chicken and lay on top.',
-                    'Add guacamole and sprinkle flax seeds.',
-                    'Drizzle lemon juice and add pepper. NO extra carbs.'
+                    'Combine all in a large bowl. Flax + Guacamole for healthy fats.'
                 ],
-                macros: { protein: '32g', carbs: '15g', fat: '18g', calories: '~350' }
-            },
-            {
-                name: 'Mediterranean Chicken Salad',
-                ingredients: ['4 oz grilled chicken breast', '2 cups mixed greens', '½ cucumber (diced)', '10 cherry tomatoes (halved)', '2 tbsp feta cheese (crumbled)', '5 olives (sliced)', '1 tbsp olive oil', '1 tbsp lemon juice', '½ tsp dried oregano', '2 tbsp flax seeds'],
-                steps: [
-                    'Grill or pan-sear chicken, let rest and slice.',
-                    'Toss greens, cucumber, tomatoes, olives in a bowl.',
-                    'Top with sliced chicken and crumbled feta.',
-                    'Whisk olive oil, lemon juice, oregano for dressing.',
-                    'Drizzle dressing and sprinkle flax seeds.'
-                ],
-                macros: { protein: '35g', carbs: '12g', fat: '20g', calories: '~370' }
-            },
-            {
-                name: 'Tandoori Chicken Salad',
-                ingredients: ['4 oz chicken breast', '1 tbsp plain yogurt', '1 tsp tandoori masala', '2 cups romaine lettuce (chopped)', '½ cucumber (diced)', '1 tomato (diced)', '¼ red onion (thinly sliced)', '2 tbsp mint-yogurt raita', '2 tbsp flax seeds', 'Lemon wedge'],
-                steps: [
-                    'Marinate chicken in yogurt and tandoori masala (15+ min).',
-                    'Grill or pan-sear until charred and cooked through (6–8 min).',
-                    'Arrange romaine, cucumber, tomato, and onion in a bowl.',
-                    'Slice tandoori chicken on top.',
-                    'Drizzle raita, sprinkle flax seeds, squeeze lemon.'
-                ],
-                macros: { protein: '33g', carbs: '10g', fat: '8g', calories: '~250' }
+                macros: { protein: '32g', carbs: '15g', fat: '18g', calories: '~350' },
+                isFiber: true, isAntioxidant: true
             },
             {
                 name: 'Salmon & Avocado Salad',
-                ingredients: ['4 oz baked or grilled salmon', '2 cups mixed greens', '½ avocado (sliced)', '½ cucumber (sliced)', '6 cherry tomatoes', '2 tbsp flax seeds', '1 tbsp olive oil', '1 tbsp lemon juice', 'Salt & pepper'],
+                ingredients: ['4 oz salmon', '2 cups mixed greens', '½ avocado', '2 tbsp flax seeds', 'Lemon & Olive Oil'],
                 steps: [
-                    'Bake salmon at 400°F for 12 min or pan-sear 4 min/side.',
-                    'Arrange greens, cucumber, and tomatoes in a bowl.',
-                    'Top with flaked salmon and avocado slices.',
-                    'Drizzle olive oil + lemon juice. Add flax seeds.',
-                    'Season with salt and pepper.'
+                    'Flake salmon over greens. Top with avocado and flax.'
                 ],
-                macros: { protein: '30g', carbs: '12g', fat: '26g', calories: '~400' }
-            },
-            {
-                name: 'Egg & Veggie Salad',
-                ingredients: ['3 hard-boiled eggs', '2 cups spinach', '½ cucumber (sliced)', '1 tomato (diced)', '¼ cup chickpeas (drained)', '2 tbsp flax seeds', '1 tbsp olive oil', '1 tsp mustard', '1 tbsp lemon juice', 'Salt & pepper'],
-                steps: [
-                    'Hard boil eggs (10 min), peel and halve.',
-                    'Arrange spinach, cucumber, tomato, and chickpeas in a bowl.',
-                    'Place egg halves on top.',
-                    'Whisk olive oil, mustard, lemon juice for dressing.',
-                    'Drizzle dressing, add flax seeds, season.'
-                ],
-                macros: { protein: '24g', carbs: '18g', fat: '22g', calories: '~365' }
+                macros: { protein: '30g', carbs: '12g', fat: '26g', calories: '~400' },
+                isFiber: true
             }
         ]
     },
     {
-        time: '10:00 PM', label: 'Recover',
-        instruction: '1 Magnesium Softgel (400mg) + warm water.',
-        recipes: []
+        time: '10:00 PM', label: 'Gut Protocol',
+        instruction: 'Mandatory Isabgol + Magnesium for bowel movement.',
+        recipes: [
+            {
+                name: 'Bowel Consistency Protocol',
+                ingredients: ['1 tbsp Isabgol (Psyllium Husk)', '300ml water', '1 Magnesium softgel (400mg)'],
+                steps: [
+                    'Mix Isabgol in water and drink immediately (do not let it gel).',
+                    'Take Magnesium softgel to relax muscles and aid digestion.',
+                    'Sleep for 7-8 hours for optimal recovery.'
+                ],
+                macros: { protein: '0g', carbs: '5g fiber', fat: '0g', calories: '~20' },
+                isFiber: true
+            }
+        ]
     },
 ];
 
@@ -439,6 +317,12 @@ function calcMacros(weightKg) {
         carbs: { min: Math.round(weightKg * 1), max: Math.round(weightKg * 2) },
         fat: { min: Math.round(weightKg * 0.5), max: Math.round(weightKg * 1) }
     };
+}
+
+// Helper to extract numeric calories from strings like "~450"
+function parseCal(calStr) {
+    if (!calStr) return 0;
+    return parseInt(calStr.replace(/[^\d]/g, '')) || 0;
 }
 
 // ===== HELPERS =====
@@ -817,11 +701,13 @@ function saveMealSelections(selections) {
 }
 
 function renderMealPlanner() {
+    const list = document.getElementById('meal-selector-list');
+    if (!list) return; // Exit if element not in DOM
+
     const selections = loadMealSelections();
     const profile = loadProfile();
     const bmr = calcBMR(profile.weight, profile.height, profile.age, profile.gender);
     const tdee = calcTDEE(bmr, 'active');
-    const list = document.getElementById('meal-selector-list');
 
     // Pre-compute availability for every recipe
     const availMap = {};
@@ -832,8 +718,15 @@ function renderMealPlanner() {
 
     // Auto-select best available recipe if current selection is unavailable
     SCHEDULE.forEach((item, i) => {
-        if (!availMap[i]) return;
-        const currentSel = selections[i] !== undefined ? selections[i] : 0;
+        if (!availMap[i] || availMap[i].length === 0) return;
+        
+        // Safeguard against stale localStorage indexes
+        let currentSel = selections[i] !== undefined ? selections[i] : 0;
+        if (currentSel >= availMap[i].length) {
+            currentSel = 0;
+            selections[i] = 0;
+        }
+
         if (!availMap[i][currentSel].canMake) {
             // Try to find one that can be made
             const betterIdx = availMap[i].findIndex(a => a.canMake);
@@ -862,22 +755,28 @@ function renderMealPlanner() {
     }).filter(Boolean);
 
     // Update totals
-    document.getElementById('total-calories').textContent = totalCal;
+    const totalCalEl = document.getElementById('total-calories');
+    if (totalCalEl) totalCalEl.textContent = totalCal;
+    
+    const calorieBarEl = document.getElementById('calorie-bar');
+    if (calorieBarEl) {
+        const pct = Math.min((totalCal / tdee) * 100, 100);
+        calorieBarEl.style.width = `${pct}%`;
+    }
 
-    const pct = Math.min((totalCal / tdee) * 100, 100);
-    document.getElementById('calorie-bar').style.width = `${pct}%`;
-
-    const diff = totalCal - Math.round(tdee);
+    const diffCount = totalCal - Math.round(tdee);
     const vsEl = document.getElementById('calorie-vs-tdee');
-    if (diff > 0) {
-        vsEl.textContent = `+${diff} cal above TDEE (${Math.round(tdee)}) — surplus for lean bulk`;
-        vsEl.style.color = '#fbbf24';
-    } else if (diff < -250) {
-        vsEl.textContent = `${diff} cal below TDEE (${Math.round(tdee)}) — deficit for cutting`;
-        vsEl.style.color = '#38bdf8';
-    } else {
-        vsEl.textContent = `${diff} cal vs TDEE (${Math.round(tdee)}) — near maintenance`;
-        vsEl.style.color = '#94a3b8';
+    if (vsEl) {
+        if (diffCount > 0) {
+            vsEl.textContent = `+${diffCount} cal above TDEE (${Math.round(tdee)}) — surplus for lean bulk`;
+            vsEl.style.color = '#fbbf24';
+        } else if (diffCount < -250) {
+            vsEl.textContent = `${diffCount} cal below TDEE (${Math.round(tdee)}) — deficit for cutting`;
+            vsEl.style.color = '#38bdf8';
+        } else {
+            vsEl.textContent = `${diffCount} cal vs TDEE (${Math.round(tdee)}) — near maintenance`;
+            vsEl.style.color = '#94a3b8';
+        }
     }
 
     // Render selectors with availability
@@ -911,6 +810,53 @@ function renderMealPlanner() {
             renderMealPlanner();
         });
     });
+
+    // Wire up Auto-Plan button
+    const btn = document.getElementById('btn-auto-plan');
+    if (btn) {
+        btn.onclick = () => autoPlanDay();
+    }
+}
+
+function autoPlanDay() {
+    const selections = {};
+    
+    SCHEDULE.forEach((item, i) => {
+        if (!item.recipes || item.recipes.length === 0) return;
+        
+        // Find all recipes we CAN make
+        const options = item.recipes.map((r, ri) => ({
+            recipe: r,
+            index: ri,
+            avail: getRecipeAvailability(r)
+        })).filter(o => o.avail.canMake);
+
+        if (options.length === 0) {
+            // If none available, stay at index 0 or current
+            selections[i] = 0;
+            return;
+        }
+
+        // Score them: Priority 1: isFiber, Priority 2: Lower Calories
+        options.sort((a, b) => {
+            // Fiber first
+            if (a.recipe.isFiber && !b.recipe.isFiber) return -1;
+            if (!a.recipe.isFiber && b.recipe.isFiber) return 1;
+            
+            // Then lower calories for lean cutting
+            const calA = parseCal(a.recipe.macros.calories);
+            const calB = parseCal(b.recipe.macros.calories);
+            return calA - calB;
+        });
+
+        selections[i] = options[0].index;
+    });
+
+    saveMealSelections(selections);
+    renderMealPlanner();
+    
+    // Smooth scroll to top to see result
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===== PANTRY RENDERER =====
